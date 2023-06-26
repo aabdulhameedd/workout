@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout Tracker</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f3f3f3;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      font-weight: bold;
+      color: #666;
+    }
+    
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+    
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .workout-list {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+    }
+    
+    .workout-item {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Workout Tracker</h1>
+
+  <div id="workout-form">
+    <div class="form-group">
+      <label for="exercise">Exercise</label>
+      <input type="text" id="exercise" placeholder="Enter exercise name" required>
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration</label>
+      <input type="text" id="duration" placeholder="Enter duration (in minutes)" required>
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea id="notes" placeholder="Enter any additional notes"></textarea>
+    </div>
+    <button onclick="addWorkout()">Add Workout</button>
+  </div>
+
+  <div id="workout-list" class="workout-list">
+    <h2>Workout History</h2>
+    <ul id="workout-items"></ul>
+  </div>
+
+  <script>
+    // Create an array to store the workouts
+    const workouts = [];
+
+    // Function to add a new workout
+    function addWorkout() {
+      // Get input values
+      const exerciseInput = document.getElementById("exercise");
+      const durationInput = document.getElementById("duration");
+      const notesInput = document.getElementById("notes");
+
+      // Create a new workout object
+      const workout = {
+        exercise: exerciseInput.value,
+        duration: durationInput.value,
+        notes: notesInput.value
+      };
+
+      // Add the workout to the array
+      workouts.push(workout);
+
+      // Clear the input fields
+      exerciseInput.value = "";
+      durationInput.value = "";
+      notesInput.value = "";
+
+      // Update the workout list
+      updateWorkoutList();
+    }
+
+    // Function to update the workout list
+    function updateWorkoutList() {
+      const workoutItems = document.getElementById("workout-items");
+      workoutItems.innerHTML = "";
+
+      // Loop through the workouts array and create list items
+      workouts.forEach(workout => {
+        // Create a list item
+        const li = document.createElement("li");
+        li.className = "workout-item";
+
+        // Create a heading for exercise name and duration
+        const heading = document.createElement("h3");
+        heading.textContent = `${workout.exercise} (${workout.duration} minutes)`;
+
+        // Create a paragraph for notes
+        const notes = document.createElement("p");
+        notes.textContent = workout.notes;
+
+        // Append the heading and notes to the list item
+        li.appendChild(heading);
+        li.appendChild(notes);
+
+        // Append the list item to the workout list
+        workoutItems.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
